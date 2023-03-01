@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -53,6 +54,12 @@ public class MainActivity extends Activity {
         mWebView = findViewById(R.id.activity_main_webview);
 
         // added js fun
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.O){
+
+            NotificationChannel channel= new NotificationChannel("My Notification","My Notification",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager =getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
         mWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
         WebSettings webSettings = mWebView.getSettings();
@@ -73,7 +80,7 @@ public class MainActivity extends Activity {
             dm.enqueue(request);
             Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
         });
-        mWebView.loadUrl("http://10.0.2.2/WebViewApp"); //Replace The Link Here
+        mWebView.loadUrl("https://faster-detect.in/"); //Replace The Link Here
     }
     private static class HelloWebViewClient extends WebViewClient
     {

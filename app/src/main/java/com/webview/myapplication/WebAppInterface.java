@@ -1,10 +1,15 @@
 package com.webview.myapplication;
 
+import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
@@ -12,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-public class WebAppInterface {
+public class    WebAppInterface {
     Context mContext;
 
     /** Instantiate the interface and set the context */
@@ -52,5 +57,26 @@ public class WebAppInterface {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(mContext.getApplicationContext());
         managerCompat.notify(1,builder.build());
+
+
+
+        // banner alert
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("New Message");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+        alertDialog.getWindow().setLayout((6 * width)/9, ActionBar.LayoutParams.WRAP_CONTENT);
+        alertDialog.getWindow().setGravity(Gravity.TOP);
+
+
     }
 }
