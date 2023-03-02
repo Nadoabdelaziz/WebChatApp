@@ -2,8 +2,11 @@ package com.webview.myapplication;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -42,8 +45,19 @@ public class    WebAppInterface {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext.getApplicationContext(), "My Notification");
         builder.setContentTitle("SafeChat");
         builder.setContentText("New Message Arrived");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(R.mipmap.safechat);
+        builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(),R.mipmap.safechat));
         builder.setAutoCancel(true);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        // url app
+//        Intent notificationIntent = new Intent(mContext, mContext.getClass());
+//        PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, notificationIntent, 0);
+//        Context context = mContext.getApplicationContext();
+
+        PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0,
+                new Intent(mContext, mContext.getClass()), PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
 
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         WebAppInterface instance = new WebAppInterface();

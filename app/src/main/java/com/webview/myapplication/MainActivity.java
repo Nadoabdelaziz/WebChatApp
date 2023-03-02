@@ -80,7 +80,9 @@ public class MainActivity extends Activity {
             dm.enqueue(request);
             Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
         });
-        mWebView.loadUrl("https://faster-detect.in/"); //Replace The Link Here
+         mWebView.loadUrl("https://faster-detect.in/"); //Replace The Link Here
+//        mWebView.loadUrl("http://10.0.2.2/WebViewApp"); //Replace The Link Here
+
     }
     private static class HelloWebViewClient extends WebViewClient
     {
