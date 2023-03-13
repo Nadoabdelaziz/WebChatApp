@@ -23,7 +23,7 @@ echo '</head>';
 echo '<body>';
 
 
-   echo '<aside>';
+   echo '<aside id="chatsmenu">';
         echo '<div id="loggedUser" data-loggedUser="'.$_SESSION["user_id"].'"></div>' 
         ?>
 
@@ -34,13 +34,12 @@ setTimeout(function() {
 }, 300000)
 </script>
 <!-- Auto refresh by k alle 5 minuten-->
-<div id="search">
+<!-- <div id="search">
     <input type="text" id="search-query" onfocus="check()" placeholder="Search for a user">
     <ul class="list-group" id="myList">
     </ul>
-    <!-- <button id="close_menu" style="color:red">X</button> -->
 
-</div>
+</div> -->
 
 <!-- <div>
         <button style="color:red">X</button>
@@ -48,22 +47,22 @@ setTimeout(function() {
 <div id="discussed_users">
 
 </div>
-<div style="padding: .2rem 3rem;">
+<!-- <div style="padding: .2rem 3rem;">
     <a id="logout" href="logout.php"><svg fill="#FFF" viewBox="-8 0 32 32" version="1.1"
             xmlns="http://www.w3.org/2000/svg">
             <title>turn-off</title>
             <path
                 d="M8.080 25.44c-4.48 0-8.080-3.6-8.080-8.080 0-3.24 1.92-6.16 4.88-7.4 0.44-0.2 0.92 0 1.12 0.44s0 0.92-0.44 1.12c-2.36 1-3.88 3.32-3.88 5.84 0 3.52 2.88 6.4 6.4 6.4s6.4-2.88 6.4-6.4c0-2.56-1.52-4.88-3.88-5.88-0.44-0.2-0.64-0.68-0.44-1.12s0.68-0.64 1.12-0.44c2.96 1.28 4.88 4.2 4.88 7.4-0.040 4.52-3.64 8.12-8.080 8.12zM8.080 15.2c-0.48 0-0.84-0.36-0.84-0.84v-6.96c0-0.48 0.36-0.84 0.84-0.84s0.84 0.36 0.84 0.84v7c0 0.44-0.4 0.8-0.84 0.8z" />
         </svg></a>
-</div>
+</div> -->
 </aside>
 
 
-<section id="chat">
+<section id="chat" style="display:none">
     <div id="activeUser">
-        <!-- <span></span> -->
     </div>
-    <div id="messages"></div>
+
+    <div id="messages" style="height: 625px;"></div>
     <div id="input_container">
         <input type="text" id="input_message" placeholder="Type your message here">
         <button id="send_button">Send</button>
@@ -73,10 +72,29 @@ setTimeout(function() {
         <source src="beep.ogg" type="audio/wav" />
     </audio>
 </section>
+
+
+<style>
+body {
+    display: contents;
+    /* grid-template-columns: repeat(1, 1fr); */
+
+}
+
+#activeUser {
+    padding: unset;
+
+}
+</style>
 <script>
 // var aside = document.getElementById("the_aside");
 // var chat_section = document.getElementById("chat");
 // var main_body = document.getElementById("main_body");
+var chatsection = document.getElementById("chat");
+var chatsitems = document.getElementById("chatsmenu");
+var BackBtn = document.getElementById("backbtn");
+
+
 
 var current_user_id;
 var messagesDiv = document.getElementById("messages");
@@ -145,6 +163,13 @@ function showToast() {
 
 var countmsg = 0;
 var MessagesNow = 0;
+
+
+$(document).on("click", "#backbtn", function() {
+    location.reload();
+
+});
+
 
 function playBeep() {
     var loggedUser = $('#loggedUser').attr("data-loggedUser");
@@ -270,6 +295,10 @@ function getUsers() {
 }
 // select user to chat
 $(document).on("click", ".discussed_user", function() {
+
+    chatsection.style.display = "block";
+    chatsitems.style.display = "none";
+
     var user_id = $(this).attr("data-user-id");
     $('.discussed_user').removeClass('active');
     $(this).addClass("active");
@@ -282,7 +311,9 @@ $(document).on("click", ".discussed_user", function() {
         },
         success: function(data) {
             $('#messages').html(data);
-            activeUserBar.innerHTML = '<span>' + user_id + '</span>'
+            activeUserBar.innerHTML =
+                '<span id="backbtn" style="cursor: pointer; padding: 0px 15px 0px 13px;" class="fa fa-arrow-circle-left" aria-hidden="true"></span> <span style="    font-size: xx-large;">' +
+                user_id + '</span>'
             messagesDiv.scrollTo(0, messagesDiv.scrollHeight);
             check();
         }
