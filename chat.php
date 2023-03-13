@@ -15,10 +15,14 @@ echo '<head>';
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     echo '<title>SafeChat</title>';
    echo '<link rel="stylesheet" href="chat.css" type="text/css">';
+   echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+   ';
     echo '<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>';
 
 echo '</head>';
 echo '<body>';
+
+
    echo '<aside>';
         echo '<div id="loggedUser" data-loggedUser="'.$_SESSION["user_id"].'"></div>' 
         ?>
@@ -34,7 +38,13 @@ setTimeout(function() {
     <input type="text" id="search-query" onfocus="check()" placeholder="Search for a user">
     <ul class="list-group" id="myList">
     </ul>
+    <!-- <button id="close_menu" style="color:red">X</button> -->
+
 </div>
+
+<!-- <div>
+        <button style="color:red">X</button>
+    </div> -->
 <div id="discussed_users">
 
 </div>
@@ -45,14 +55,10 @@ setTimeout(function() {
             <path
                 d="M8.080 25.44c-4.48 0-8.080-3.6-8.080-8.080 0-3.24 1.92-6.16 4.88-7.4 0.44-0.2 0.92 0 1.12 0.44s0 0.92-0.44 1.12c-2.36 1-3.88 3.32-3.88 5.84 0 3.52 2.88 6.4 6.4 6.4s6.4-2.88 6.4-6.4c0-2.56-1.52-4.88-3.88-5.88-0.44-0.2-0.64-0.68-0.44-1.12s0.68-0.64 1.12-0.44c2.96 1.28 4.88 4.2 4.88 7.4-0.040 4.52-3.64 8.12-8.080 8.12zM8.080 15.2c-0.48 0-0.84-0.36-0.84-0.84v-6.96c0-0.48 0.36-0.84 0.84-0.84s0.84 0.36 0.84 0.84v7c0 0.44-0.4 0.8-0.84 0.8z" />
         </svg></a>
-
-    <!-- zizo added here-->
-
-    <!-- <input type="button" value="notification" onClick="notification()" /> -->
-
-
 </div>
 </aside>
+
+
 <section id="chat">
     <div id="activeUser">
         <!-- <span></span> -->
@@ -68,6 +74,10 @@ setTimeout(function() {
     </audio>
 </section>
 <script>
+// var aside = document.getElementById("the_aside");
+// var chat_section = document.getElementById("chat");
+// var main_body = document.getElementById("main_body");
+
 var current_user_id;
 var messagesDiv = document.getElementById("messages");
 var activeUserBar = document.getElementById("activeUser");
@@ -80,46 +90,108 @@ $(document).on("keyup", function(e) {
         sendMessage();
     }
 });
-var lastCheck = new Date();
 
-// function showAndroidToast(toast) {
-//     Android.showToast("new message arrived");
-// }
+// $("#close_menu").on("click", function() {
+//     aside.style.display = "none";
+//     chat_section.style.width = "1025px";
+//     // main_body.style.grid-template-columns = "0vf";
+
+
+// });
+
+
+var lastCheck = new Date();
 
 function notification() {
     Android.notifyme();
 }
 
+function showToast() {
+    Android.showToast("hi worked")
+}
+
+// function playBeep(){
+//     $.ajax({
+//         url: "check_messages.php",
+//         data: {
+//             last_check: lastCheck.toISOString()
+//         },
+//     success: function(data){
+//         // showToast();
+//         lastCheck = new Date();
+//         var db = JSON.parse(data);
+//         var loggedUser = $('#loggedUser').attr("data-loggedUser");
+//         // if(db.has_new_message && db.receiver_id == loggedUser )
+//         if(db.has_new_message && db.receiver_id == loggedUser ) {
+//             if (Notification.permission === "granted") {
+//                 var notification = new Notification("New message", {
+//                     body: "You have a new message in Chat"
+//                 });
+//             } else if (Notification.permission !== "denied") {
+//                 Notification.requestPermission().then(function (permission) {
+//                     if (permission === "granted") {
+//                         var notification = new Notification("New message", {
+//                             body: "You have a new message in Chat "
+//                         });
+//                     }
+//                 });
+//             }
+//             var sound = document.getElementById("new-message-sound");
+//             sound.play();
+//         }
+//     }
+//     });
+// }
+
+var countmsg = 0;
+var MessagesNow = 0;
+
 function playBeep() {
+    var loggedUser = $('#loggedUser').attr("data-loggedUser");
+    var found = false;
+
     $.ajax({
         url: "check_messages.php",
+        async: false,
         data: {
+            loggedin: loggedUser,
             last_check: lastCheck.toISOString()
         },
         success: function(data) {
             lastCheck = new Date();
             var db = JSON.parse(data);
-            var loggedUser = $('#loggedUser').attr("data-loggedUser");
-            // if(db.has_new_message && db.receiver_id == loggedUser )
-            if (db.has_new_message && db.receiver_id == loggedUser) {
-                if (Notification.permission === "granted") {
-                    var notification = new Notification("New message", {
-                        body: "You have a new message in Chat"
-                    });
-                } else if (Notification.permission !== "denied") {
-                    Notification.requestPermission().then(function(permission) {
-                        if (permission === "granted") {
-                            var notification = new Notification("New message", {
-                                body: "You have a new message in Chat "
-                            });
-                        }
-                    });
+
+            // alert("count of beeps" + countmsg);
+            // alert("number msg" + db.MsgCount);
+            if (db.MsgCount > countmsg && db.MsgCount > MessagesNow) {
+
+                if (db.has_new_message && loggedUser == db.receiver_id) {
+                    countmsg++;
+                    MessagesNow = db.MsgCount;
+                    // showToast();
+                    found = true;
+                    if (Notification.permission === "granted") {
+                        var notification = new Notification("New message", {
+                            body: "You have a new message in Chat"
+                        });
+                    } else if (Notification.permission !== "denied") {
+                        Notification.requestPermission().then(function(permission) {
+                            if (permission === "granted") {
+                                var notification = new Notification("New message", {
+                                    body: "You have a new message in Chat "
+                                });
+                            }
+                        });
+                    }
+                    var sound = document.getElementById("new-message-sound");
+                    sound.play();
                 }
-                var sound = document.getElementById("new-message-sound");
-                sound.play();
             }
         }
     });
+    if (found) {
+        notification();
+    }
 }
 
 function sendMessage() {
@@ -242,9 +314,9 @@ setInterval(function() {
 }, 1500);
 setInterval(function() {
     playBeep();
-    // showAndroidToast();
-    notification();
-}, 1800);
+
+}, 1000);
+// playBeep();
 
 function getMessages(user_id) {
     $.ajax({

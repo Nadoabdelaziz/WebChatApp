@@ -1,0 +1,14 @@
+0) change the link webview in android code
+
+1) Above function playbeep() place => the notification function
+	
+	function notification() {
+    		Android.notifyme();
+	}
+
+2) Inside Playbeep() function => after  =>  if (db.has_new_message && db.receiver_id == loggedUser) => 
+	
+	snotification();
+	
+
+

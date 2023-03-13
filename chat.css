@@ -34,9 +34,11 @@ body {
     display: grid;
     font-family: sans-serif;
     grid-template-rows: 100vh;
+    /* grid-template-columns: repeat(5,1fr); */
     grid-template-columns: repeat(4,1fr);
     grid-template-areas: 
     "aside chat chat chat" ;
+    /* max-width: 1024px; */
     max-width: 1024px;
     margin: auto;
     background-color: #ece5dd;
@@ -50,6 +52,12 @@ aside {
     grid-area: aside;
     background-color: #f0f0f0;
 }
+
+.new_menu{
+    grid-area: aside;
+    background-color: #f0f0f0;
+}
+
 section {
     grid-area: chat;
 }
@@ -76,7 +84,7 @@ section {
     font-size: 24px;
     color: aliceblue;
 }
-.discussed_user {
+.discussed_user{
     cursor: pointer;
     padding: .7rem;
     background-color: #075e54;

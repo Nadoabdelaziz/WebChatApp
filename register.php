@@ -6,7 +6,7 @@ include "config.php";
 ini_set('session.gc_maxlifetime', 31536000);
 session_start();
 if(isset($_SESSION["user_id"])){
-  header("Location: chat.php");
+  header("Location: index.php");
   exit();
   }
 
@@ -31,7 +31,7 @@ if (isset($_POST["user_id"]) && isset($_POST["password"])) {
     $stmt->execute();
     $_SESSION["user_id"] = $user_id;
     if(isset($_SESSION["user_id"])){
-      header("Location: chat.php");
+      header("Location: index.php");
       exit();
       }
 }

@@ -5,7 +5,7 @@ include "config.php";
 ini_set('session.gc_maxlifetime', 31536000);
 session_start();
 if(isset($_SESSION["user_id"])){
-  header("Location: chat.php");
+  header("Location: index.php");
   exit();
   }
 
@@ -27,7 +27,7 @@ if (isset($_POST["user_id"]) && isset($_POST["password"])) {
     // Benutzer einloggen und zur Chat-Seite weiterleiten
     $_SESSION["user_id"] = $user_id;
     if(isset($_SESSION["user_id"])){
-      header("Location: chat.php");
+      header("Location: index.php");
       exit();
       }
   }
@@ -43,4 +43,3 @@ echo "<input type='text' name='user_id' placeholder='Benutzername'>";
 echo "<input type='password' name='password' placeholder='Passwort'>";
 echo "<input type='submit'>";
 echo "</form>";
-
