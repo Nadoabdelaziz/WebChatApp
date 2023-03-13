@@ -54,7 +54,7 @@ aside {
 }
 
 .new_menu{
-    grid-area: aside;
+    width: max-content;
     background-color: #f0f0f0;
 }
 

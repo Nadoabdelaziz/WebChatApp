@@ -25,10 +25,10 @@ if ($result->num_rows > 0) {
         $stmt->close();
         $unread_count = $unreadRow['unread'];
         if ( $unread_count > 0 ){
-            echo '<div class="discussed_user" data-user-id="'.$user_id.'"><span>'.$user_id.'</span><span class="badge">'.$unread_count.'</span></div>';
+            echo '<div class="discussed_user" data-user-id="'.$user_id.'"><span style="color: green;font-size: 32px;" class="fa fa-comment" aria-hidden="true"></span> <span style="font-size: 24px;">'.$user_id.'</span><span class="badge">'.$unread_count.'</span></div>';
         }
         else {
-            echo '<div class="discussed_user" data-user-id="'.$user_id.'"><span>'.$user_id.'</span><span class="badge"></span></div>';
+            echo '<div class="discussed_user" data-user-id="'.$user_id.'"><span style="color: green;font-size: 32px;" class="fa fa-comment" aria-hidden="true"></span> <span style="font-size: 24px;">'.$user_id.'</span><span class="badge"></span></div>';
         }
     }
 } else {

@@ -44,6 +44,13 @@ setTimeout(function() {
 <!-- <div>
         <button style="color:red">X</button>
     </div> -->
+
+<div style="padding: 15px 0px 30px 3px;background:#323232;color:white;font-size: x-large;">
+    <span id="BackMenu" style="cursor: pointer; padding: 0px 15px 0px 13px;" class="fa fa-arrow-left"
+        aria-hidden="true"></span>
+    Chats
+</div>
+
 <div id="discussed_users">
 
 </div>
@@ -62,7 +69,7 @@ setTimeout(function() {
     <div id="activeUser">
     </div>
 
-    <div id="messages" style="height: 625px;"></div>
+    <div id="messages" style="height: 540px;"></div>
     <div id="input_container">
         <input type="text" id="input_message" placeholder="Type your message here">
         <button id="send_button">Send</button>
@@ -85,6 +92,13 @@ body {
     padding: unset;
 
 }
+
+.discussed_user {
+    background: white;
+    color: black;
+    display: block;
+
+}
 </style>
 <script>
 // var aside = document.getElementById("the_aside");
@@ -92,7 +106,9 @@ body {
 // var main_body = document.getElementById("main_body");
 var chatsection = document.getElementById("chat");
 var chatsitems = document.getElementById("chatsmenu");
-var BackBtn = document.getElementById("backbtn");
+// var BackBtn = document.getElementById("backbtn");
+// var BackMenu = document.getElementById("BackMenu");
+
 
 
 
@@ -169,6 +185,12 @@ $(document).on("click", "#backbtn", function() {
     location.reload();
 
 });
+
+$(document).on("click", "#BackMenu", function() {
+    window.location = 'http://localhost/WebViewApp/index.php';
+
+});
+
 
 
 function playBeep() {

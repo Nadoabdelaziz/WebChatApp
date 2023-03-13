@@ -7,7 +7,11 @@
                     <img src="security\assets\img\safechat.jpeg" alt="profile_picture">
                     <h3>SAFE-CHAT</h3>
                 </div> -->
-        <div class="profile">
+        <div style="
+    text-align: end;
+" class="profile">
+            <span class="fa fa-bars" aria-hidden="true"
+                style="cursor:pointer;color: white;padding: 8px;font-size: larger;" id="CloseMenu"></span>
             <h2 style="text-align: center;color: white;margin-bottom: 12px;">User ID:</h2>
             <?php
                 if(isset($_SESSION["user_id"])){
@@ -71,6 +75,23 @@
 
 </div>
 
+
+<script>
+var MenuClose = document.getElementById("CloseMenu");
+var new_menu = document.getElementsByClassName("new_menu");
+
+
+
+MenuClose.addEventListener("click", function() {
+    if (new_menu[0].style.width == "260px") {
+        new_menu[0].style.width = "110px";
+    } else
+        new_menu[0].style.width = "260px";
+
+});
+</script>
+
+
 <style>
 /* .wrapper .sidebar {
     background: rgb(5, 68, 104);
@@ -83,10 +104,15 @@
     transition: all 0.5s ease;
 } */
 
+
 #search {
     margin-bottom: 50px;
     margin-top: 30px;
 
+}
+
+.new_menu {
+    width: 260px;
 }
 
 .wrapper .sidebar .profile h3 {
@@ -144,12 +170,19 @@
 }
 
 @media screen and (max-height: 450px) {
-    .sidebar {
-        width: 120px;
-    }
 
     .sidebar a {
         font-size: 18px;
     }
+
+    .sidebar {
+        width: 600px;
+    }
+
+
+}
+
+.sidebar {
+    width: auto;
 }
 </style>
