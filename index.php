@@ -103,11 +103,38 @@ $(document).on("keyup", function(e) {
 var lastCheck = new Date();
 
 function notification() {
-    Android.notifyme();
+    // Android.notifyme();
+    var alertbox = true;
+    $.ajax({
+        type: "GET",
+        data: {
+            alertbox: alertbox
+        },
+        url: "get_discussed_users.php",
+        success: function(data) {
+            Android.notifyme(data);
+            // var result = $.parseJSON(data);
+            // var result = data.split("|");
+            // Android.notifyme(result[0], result[1]);
+        }
+    });
 }
 
 function showToast() {
-    Android.showToast("hi worked")
+    // var alertbox = true;
+    // $.ajax({
+    //     type: "GET",
+    //     data: {
+    //         alertbox: alertbox
+    //     },
+    //     url: "get_discussed_users.php",
+    //     success: function(data) {
+    //         Android.showToast(data);
+    //     }
+    // });
+    Android.showToast("data");
+
+
 }
 
 // function playBeep(){
@@ -259,12 +286,15 @@ $(document).ready(function() {
 });
 
 function getUsers() {
+    var indexPage = true;
     $.ajax({
         type: "GET",
+        data: {
+            indexPage: indexPage
+        },
         url: "get_discussed_users.php",
         success: function(data) {
-            $('#discussed_users').html(data);
-            $("div[data-user-id='" + current_user_id + "']").addClass("active");
+            $('#chats_icon').html(data);
         }
     });
 }

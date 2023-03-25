@@ -40,16 +40,47 @@
         <ul style="list-style-type: none;display: contents;">
 
             <li>
-                <a href="chat.php">
+                <?php
+                if(isset($_SESSION['user_id'])){
+                    ?>
+                <a id="chats_icon" href="chat.php">
+                    <!-- <span class="icon"><i class="fas fa-user"></i></span>
+                    <span class="item">Chats</span> -->
+                </a>
+                <?php
+                }
+                else{
+                    ?>
+                <a href="login.php">
                     <span class="icon"><i class="fas fa-user"></i></span>
                     <span class="item">Chats</span>
                 </a>
+                <?php
+
+                }
+
+                ?>
             </li>
             <li>
-                <a href="login.php">
-                    <span class="icon"><i class="fas fa-exclamation-circle"></i></span>
-                    <span class="item">Login</span>
-                </a>
+
+                <?php
+                if(isset($_SESSION["user_id"])){
+                ?>
+                <a href="#" onclick="showToast();">
+                    <?php
+                }
+                else{
+                    ?>
+                    <a href="login.php">
+                        <?php
+                }
+                ?>
+
+                        <span class="icon"><i class="fas fa-exclamation-circle"></i></span>
+                        <span class="item">Login</span>
+                    </a>
+
+
             </li>
             <li>
                 <a href="register.php">

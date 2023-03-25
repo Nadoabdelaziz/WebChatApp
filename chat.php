@@ -69,10 +69,15 @@ setTimeout(function() {
     <div id="activeUser">
     </div>
 
-    <div id="messages" style="height: 540px;"></div>
+    <div id="messages" style="height: 660px;"></div>
     <div id="input_container">
         <input type="text" id="input_message" placeholder="Type your message here">
-        <button id="send_button">Send</button>
+        <!-- <button id="send_button">Send</button> -->
+        <button id="send_button" style="border-style: inherit;">
+            <span class="fa fa-arrow-circle-right" aria-hidden="true"
+                style="font-size: -webkit-xxx-large;color: green;">
+            </span>
+        </button>
     </div>
     <audio id="new-message-sound" controls style="display:none;">
         <source src="beep.mp3" type="audio/mpeg" />
@@ -187,7 +192,7 @@ $(document).on("click", "#backbtn", function() {
 });
 
 $(document).on("click", "#BackMenu", function() {
-    window.location = 'http://localhost/WebViewApp/index.php';
+    history.back();
 
 });
 
@@ -305,6 +310,7 @@ $(document).ready(function() {
     getUsers();
 });
 
+
 function getUsers() {
     $.ajax({
         type: "GET",
@@ -315,6 +321,7 @@ function getUsers() {
         }
     });
 }
+
 // select user to chat
 $(document).on("click", ".discussed_user", function() {
 
@@ -366,7 +373,7 @@ setInterval(function() {
     getMessages(current_user_id);
 }, 1500);
 setInterval(function() {
-    playBeep();
+    // playBeep();
 
 }, 1000);
 // playBeep();
